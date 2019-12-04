@@ -1,0 +1,35 @@
+﻿<head>
+<title>Open a File</title>
+<HTA:APPLICATION
+                 APPLICATIONNAME ="Open File"
+                 SCROLL="no"
+                 SINGLEINSTANCE="yes"
+                 WINDOWSTATE="normal"
+>
+</head>
+<script type="text/vbscript">
+    Function OpenFile()
+        Set InputFile = document.getElementsByTagName("input")(0)
+        If InputFile.Value = "" Then
+            OpenFile = ""
+            Exit Function
+        End If
+        Set fso = CreateObject("Scripting.FileSystemObject")
+        Set file = fso.CreateTextFile("path.txt")
+        file.WriteLine(InputFile.Value)
+        file.Close
+        self.close()
+    End Function
+
+    Sub Window_onLoad
+        window.resizeTo 275, 125
+        Set fso = CreateObject("Scripting.FileSystemObject")
+        Set file = fso.CreateTextFile("path.txt")
+        file.Write "Don't read"
+        file.Close
+    End Sub
+</script>
+<body>
+<input type="file" />
+<input type="button" value="Open" onclick="OpenFile()"/>
+</body>
